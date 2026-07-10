@@ -1,1 +1,1 @@
-# Forecasting Daily Peak Electricity Demand in Spain
+# When Simple Beats Sophisticated: Forecasting Spain's Peak Electricity Demand

@@ -29,9 +29,7 @@ That's not where this stops. The loss was diagnosed in three steps: ruled out "t
 
 **3. The real mechanism: the model dampens the one signal that matters most.** Linear regression assigns yesterday's peak a coefficient of roughly **0.3**; the naive baseline effectively uses it at **1.0**. The model dilutes exactly the signal it should be leaning on hardest.
 
-**4. That same diagnostic process found the one pattern every method shares: Weekends.** Slicing the errors by day type: the naive baseline's error jumps **70%** on weekends (1,305 → 2,214 MW). The feature based
-model's jumps only **27%** (1,927 → 2,456 MW), a smaller relative degradation, though still a higher absolute error than the baseline. The model already includes an explicit weekend indicator as one of its seven
-features, and still can't close the gap. That rules out "a missing weekend feature" and points at something about weekend volatility the current feature set doesn't capture.
+**4. That same diagnostic process found the one pattern every method shares: Weekends.** Slicing the errors by day type: the naive baseline's error jumps **70%** on weekends (1,305 → 2,214 MW). The feature based model's jumps only **27%** (1,927 → 2,456 MW), a smaller relative degradation, though still a higher absolute error than the baseline. The model already includes an explicit weekend indicator as one of its seven features, and still can't close the gap. That rules out "a missing weekend feature" and points at something about weekend volatility the current feature set doesn't capture.
 
 **5. A second pre-registered hypothesis was tested and disproven.** Error was expected to peak at temperature extremes. It didn't, the mildest days were hardest to predict. No mechanism is claimed; the pattern is real, the cause isn't established, and that's said plainly rather than papered over.
 
@@ -50,9 +48,9 @@ target than temperature or season ever were.
 
 | | |
 |---|---|
-| ![U-shape scatter](charts/chart1_ushape_scatter.png) | ![Three-way MAE](charts/chart4_three_way_mae.png) |
+| ![U-shape scatter](charts/Chart1_UShape_Scatter.png) | ![Three-way MAE](charts/Chart4_Three_Way_Mae.png) |
 | **Demand vs. temperature:** the two-sided pattern that motivated testing a model at all. | **The result:** nothing beats the naive baseline, non-linear model included. |
-| ![Linear model behaviour](charts/chart2_linear_behaviour.png) | ![Weekend gap](charts/chart3_weekend_gap.png) |
+| ![Linear model behaviour](charts/Chart2_Linear_Behaviour.png) | ![Weekend gap](charts/Chart3_Weekend_Gap.png) |
 | **Model behaviour** over the test year, tracks well, misses on hard days. | **The standout pattern:** every method misses more on weekends. |
 
 ---

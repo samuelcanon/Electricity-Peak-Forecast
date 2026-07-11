@@ -21,7 +21,7 @@ That's not where this stops. The loss was diagnosed in three steps: ruled out "t
 
 ---
 
-## The Diagnosis and the Error Analysis That Came With It
+## Diagnosic Findings and the Error Analysis That Came With It
 
 **1. The model loses by design of the test.** This was a **pre-registered** question (locked before the data was seen) so a loss is a clean result. Daily peak demand is highly autocorrelated, which makes "assume tomorrow looks like today" a genuinely hard baseline to beat.
 
@@ -35,7 +35,7 @@ That's not where this stops. The loss was diagnosed in three steps: ruled out "t
 
 ---
 
-## The business takeaway
+## Business Context
 
 **Don't build a feature-based model for this task** a simple persistence rule is already the ceiling. That's a real resourcing recommendation, tested honestly rather than assumed, and it tells a team where *not* to spend modelling budget.
 

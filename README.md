@@ -1,5 +1,5 @@
 # When Simple Beats Sophisticated: Forecasting Spain's Peak Electricity Demand
-*A linear regression was pre-registered against a trivial "tomorrow = today" guess, one that's famously hard to beat. The guess won, as expected, and diagnosing exactly why, down to the one pattern that beat every method tested, is where it starts to get interesting.*
+*A linear regression was pre-registered against a trivial "tomorrow = today" guess, one that's famously hard to beat. As expected the guess won, but not *everywhere* and diagnosing exactly where it didn't hold is where it starts to get interesting.*
 
 ***Stack: Python · pandas · SQL (SQLite) · scikit-learn · matplotlib/seaborn · ENTSO-E · Open-Meteo (ERA5)***
 

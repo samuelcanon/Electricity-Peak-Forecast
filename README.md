@@ -1,11 +1,11 @@
 # When Simple Beats Sophisticated: Forecasting Spain's Peak Electricity Demand
-### A linear regression was pre-registered against a trivial "tomorrow = today" guess. The guess won and diagnosing exactly why, down to the one pattern that beat every method tested.
+*A linear regression was pre-registered against a trivial "tomorrow = today" guess. The guess won and diagnosing exactly why, down to the one pattern that beat every method tested.*
 
-**Stack:** Python · pandas · SQL (SQLite) · scikit-learn · matplotlib/seaborn · ENTSO-E · Open-Meteo (ERA5)
+***Stack: Python · pandas · SQL (SQLite) · scikit-learn · matplotlib/seaborn · ENTSO-E · Open-Meteo (ERA5)***
 
 ---
 
-## TL;DR
+**Overview**
 
 A three-source **SQL pipeline** (ENTSO-E demand, Open-Meteo weather, derived calendar) fed a linear regression **pre-registered** against one question: can an interpretable, feature-based model beat the trivial guess that tomorrow's peak looks like today's? **It couldn't by 32.8%.**
 
@@ -21,7 +21,7 @@ That's not where this stops. The loss was diagnosed in three steps: ruled out "t
 
 ---
 
-## The Diagnosis
+## The Diagnosis and the Error Analysis That Came With It
 
 **1. The model loses by design of the test.** This was a **pre-registered** question (locked before the data was seen) so a loss is a clean result. Daily peak demand is highly autocorrelated, which makes "assume tomorrow looks like today" a genuinely hard baseline to beat.
 
@@ -29,7 +29,7 @@ That's not where this stops. The loss was diagnosed in three steps: ruled out "t
 
 **3. The real mechanism: the model dampens the one signal that matters most.** Linear regression assigns yesterday's peak a coefficient of roughly **0.3**; the naive baseline effectively uses it at **1.0**. The model dilutes exactly the signal it should be leaning on hardest.
 
-**4. That same diagnostic process found the one pattern every method shares: Weekends.** Slicing the errors by day type: the naive baseline's error jumps **70%** on weekends (1,305 → 2,214 MW). The feature based model's jumps only **27%** (1,927 → 2,456 MW), a smaller relative degradation, though still a higher absolute error than the baseline. The model already includes an explicit weekend indicator as one of its seven features, and still can't close the gap. That rules out "a missing weekend feature" and points at something about weekend volatility the current feature set doesn't capture.
+**4. The same error-analysis pass found the one pattern every method shares: Weekends..** Slicing the errors by by weekday vs. weekend: the naive baseline's error jumps 70% on weekends (1,305 → 2,214 MW); the feature-based model's jumps only 27% (1,927 → 2,456 MW) — a smaller relative degradation, though still a higher absolute error than the baseline. The model already includes an explicit weekend indicator as one of its seven features, and still can't close the gap. That rules out "a missing weekend feature" and points at something about weekend volatility the current feature set doesn't capture — a real pattern, not a diagnosed cause.
 
 **5. A second pre-registered hypothesis was tested and disproven.** Error was expected to peak at temperature extremes. It didn't, the mildest days were hardest to predict. No mechanism is claimed; the pattern is real, the cause isn't established, and that's said plainly rather than papered over.
 
@@ -48,9 +48,9 @@ target than temperature or season ever were.
 
 | | |
 |---|---|
-| ![U-shape scatter](charts/Chart1_UShape_Scatter.png) | ![Three-way MAE](charts/Chart4_Three_Way_Mae.png) |
+| ![U-shape scatter](Charts/Chart1_UShape_Scatter.png) | ![Three-way MAE](Charts/Chart4_Three_Way_Mae.png) |
 | **Demand vs. temperature:** the two-sided pattern that motivated testing a model at all. | **The result:** nothing beats the naive baseline, non-linear model included. |
-| ![Linear model behaviour](charts/Chart2_Linear_Behaviour.png) | ![Weekend gap](charts/Chart3_Weekend_Gap.png) |
+| ![Linear model behaviour](Charts/Chart2_Linear_Behaviour.png) | ![Weekend gap](Charts/Chart3_Weekend_Gap.png) |
 | **Model behaviour** over the test year, tracks well, misses on hard days. | **The standout pattern:** every method misses more on weekends. |
 
 ---
@@ -82,15 +82,15 @@ Built around one `COUNTRY_CODE` parameter, the same pipeline runs on any ENTSO-E
 - One production model, tested honestly against a simple baseline (not tuned to force a win).
 
 ## Future Work
-- The weekend-volatility signal the diagnosis surfaced 
-- Different model class or a volatility-specific feature, varing features.
-- Multi-city temperature, population weighted.
+- Diagnosing the weekend signal, is it a consistent or volitile trend? 
+- Different model class or a volatility specific feature, varing features.
+- Population weighted multi-city temperature.
 - Genuinely forecasted temperature at a fixed lead time.
 
 ## Reproduce
 bash
 pip install -r requirements.txt
-# add your ENTSO-E API token as an environment variable, then run the notebook top to bottom.
+*add your ENTSO-E API token as an environment variable, then run the notebook top to bottom.*
 
 Outputs: `data_aligned.csv` (model-ready data) and `results_summary.csv` (headline metrics).
 

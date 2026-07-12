@@ -7,16 +7,15 @@
 
 **Overview**
 
-A three-source **SQL pipeline** (ENTSO-E demand, Open-Meteo weather, derived calendar) fed a linear regression pre-registered against one question:
-can an interpretable, feature-based model beat the trivial guess that tomorrow's peak looks like today's? **The trivial guess outperformed the built model by 32.8%.**
+A three-source **SQL pipeline** (ENTSO-E demand, Open-Meteo weather, derived calendar) fed a linear regression pre-registered against one question: can an interpretable, feature-based model beat the trivial guess that tomorrow's peak looks like today's? **The trivial guess outperformed the built model by 32.8%.**
 
-That's not where this stops. The loss was diagnosed in three steps: ruling out the notion that extra features hurt (a lag-only model was worse still), ruling out the model's shape being wrong (a non-linear model still lost), and landed on the real cause, the model dilutes yesterday's signal to roughly a third of its true weight. That same diagnostic process surfaced the one pattern that survived every method tested: **Weekends**. The model already tries to account for them, it's one of only seven features, and still can't close the gap.
+That's not where this stops. The loss was diagnosed in three steps: ruling out the notion that extra features hurt (a lag only model was worse still), ruling out the model's shape being wrong overall (a non-linear model still lost, in aggregate), and landing on the real cause: the model dilutes yesterday's signal to roughly a third of its true weight. That same diagnostic process surfaced the one pattern every method shares, weekends are harder to predict. But not equally as the non-linear model's weekend error actually comes in below the baseline's.
 
 | Approach | Test MAE (MW) | Result |
 |---|---|---|
 | **Naive persistence** (tomorrow = today) | **1,565** | the benchmark to beat |
-| Feature-based model (temperature + calendar) | 2,078 | **32.8% lower, doesn't earn its complexity** |
-| Non-linear diagnostic (gradient boosting, untuned) | 1,872 | still **19.6% lower**, rules out "wrong model shape" |
+| Feature based model (temperature + calendar) | 2,078 | **32.8% higher, doesn't earn its complexity** |
+| Non-linear diagnostic (gradient boosting, untuned) | 1,872 | still **19.6% higher overall**, through it bears the baselineon weekends |
 
 *Held-out test: all of 2024 (364 days), trained on 1,821 prior days.*
 

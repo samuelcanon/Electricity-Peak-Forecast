@@ -41,7 +41,7 @@ Yesterday's peak is the strongest predictor in the dataset as it correlates with
 <br>
 
 **4. The same error analysis found where a better model actually wins: weekends.**
-Slicing the errors by day type turned up the one genuinely useful pattern. Every method struggles more on weekends — but not equally. The naive baseline degrades hardest, its error jumping 69.7% from weekday to weekend (1,305 → 2,214 MW). The linear model degrades less (1,927 → 2,456 MW, +27.5%). The non-linear model degrades least of all (1,802 → 2,046 MW, +13.5%) — and crucially, its weekend error of 2,046 MW comes in *below* the baseline's 2,214 MW. **That's the only place any model beats the baseline outright.** It's a real reversal of the headline: added sophistication is dead weight in general, but on weekends it earns its keep.
+Slicing the errors by day type turned up the one genuinely useful pattern. Every method struggles more on weekends but not equally. The naive baseline degrades hardest, its error jumping 69.7% from weekday to weekend (1,305 to 2,214 MW). The linear model degrades less (1,927 to 2,456 MW, +27.5%). The non-linear model degrades least of all (1,802 to 2,046 MW, +13.5%) and crucially, its weekend error of 2,046 MW comes in *below* the baseline's 2,214 MW. **That's the only place any model beats the baseline outright.** It's a real reversal of the headline: added sophistication is dead weight in general, but on weekends it earns its keep.
 
 ![Weekend gap](Charts/Chart3_Weekend_Gap.png) 
 
